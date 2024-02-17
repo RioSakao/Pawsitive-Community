@@ -5,4 +5,5 @@ from .models import Timeline
 class TimelineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Timeline
-        fields = ('username', 'category', 'comment', 'images')
+        fields = ['id', 'username', 'missing', 'foster',
+                  'adoption', 'general', 'comment', 'images', 'created_at']
