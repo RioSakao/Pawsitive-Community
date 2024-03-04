@@ -29,7 +29,7 @@ class TimelineViews(APIView):
         # Access the properties from the Python object
         p_username = data.get('username', '')
         p_categories = data.get('categories', {})
-        p_comment = data.get('comment', '')
+        p_content = data.get('content', '')
         p_image = data.get('image', '')
         if p_categories is not None:
             missing = p_categories.get('missing', False)
@@ -38,6 +38,6 @@ class TimelineViews(APIView):
             general = p_categories.get('general', False)
             Timeline(username=p_username, missing=missing, foster=foster,
                      adoption=adoption, general=general,
-                     comment=p_comment, images=p_image
+                     content=p_content, images=p_image
                      ).save()
         return Response(status=status.HTTP_201_CREATED)

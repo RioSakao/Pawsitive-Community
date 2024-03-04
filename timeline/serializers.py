@@ -6,4 +6,4 @@ class TimelineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Timeline
         fields = ['id', 'username', 'missing', 'foster',
-                  'adoption', 'general', 'comment', 'images', 'created_at']
+                  'adoption', 'general', 'content', 'images', 'created_at']

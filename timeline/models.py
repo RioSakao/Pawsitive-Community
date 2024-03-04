@@ -7,7 +7,7 @@ class Timeline(models.Model):
     foster = models.BooleanField(default=False)
     adoption = models.BooleanField(default=False)
     general = models.BooleanField(default=False)
-    comment = models.TextField()
+    content = models.TextField()
     images = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
