@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication',
     'chat',
-    'timeline'
+    'timeline',
+    # 'timeline_comment'
 ]
 
 MIDDLEWARE = [

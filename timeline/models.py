@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Timeline(models.Model):
@@ -12,4 +13,7 @@ class Timeline(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
 
-timeline = Timeline('riosakao', 'general', 'test', '')
+class Comment(models.Model):
+    post = models.ForeignKey(Timeline, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()

@@ -2,10 +2,39 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Timeline
-from .serializers import TimelineSerializer
+from .models import Timeline, Comment
+from .serializers import TimelineSerializer, CommentSerializer
 from django.views.decorators.csrf import csrf_exempt
 import json
+
+
+class CommentViews(APIView):
+    http_method_names = ['get', 'post']
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    @csrf_exempt
+    def post(self, request, format=None):
+        json_data = next(iter(request.data.keys()))
+        # Deserialize the JSON string to a Python object
+        data = json.loads(json_data)
+        post_id = data.get('id')
+        print(post_id)
+        try:
+            post = Timeline.objects.get(pk=post_id)
+            text = data.get('text')
+            print(text)
+            Comment(post=post, text=text).save()
+        except:
+            print("Catched an error")
+
+        return Response(status=status.HTTP_201_CREATED)
+
+    @csrf_exempt
+    def get(self, request, format=None):
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
 
 
 class TimelineViews(APIView):

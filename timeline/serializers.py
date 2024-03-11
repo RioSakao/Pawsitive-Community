@@ -1,9 +1,16 @@
 from rest_framework import serializers
-from .models import Timeline
+from .models import Timeline, Comment
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__'
 
 
 class TimelineSerializer(serializers.ModelSerializer):
+    comments = CommentSerializer(many=True, read_only=True)
+
     class Meta:
         model = Timeline
-        fields = ['id', 'username', 'missing', 'foster',
-                  'adoption', 'general', 'content', 'images', 'created_at']
+        fields = '__all__'
