@@ -1,8 +1,7 @@
-from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Timeline, Comment
+from .models import Timeline, Comment, Image
 from .serializers import TimelineSerializer, CommentSerializer
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -59,7 +58,7 @@ class TimelineViews(APIView):
         p_username = data.get('username', '')
         p_categories = data.get('categories', {})
         p_content = data.get('content', '')
-        p_image = data.get('image', '')
+        p_image = Image.objects.create(data.get('images', ''))
         if p_categories is not None:
             missing = p_categories.get('missing', False)
             foster = p_categories.get('foster', False)

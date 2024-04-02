@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
 
     'corsheaders',
     'rest_framework',
@@ -46,21 +47,44 @@ INSTALLED_APPS = [
     # 'timeline_comment'
 ]
 
+# ensures that DRF uses token-based authentication for API requests
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+# # Set to True to allow all origins, or False to specify specific origins.
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOWED_ORIGINS = (
+# Set this to True if you want the server to include cookies in the requests it allows.
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
     "http://localhost:3000",  # Add your Next.js app URL here
 )
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000/']
+# ALLOWED_HOSTS = [
+#     'localhost',
+# ],
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://localhost:3000'
+# ],
+# ALLOWED_HOSTS = [
+#     'localhost',
+# ],
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+# ]
+
 
 ROOT_URLCONF = 'DjangoProject.urls'
 
@@ -138,3 +162,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = '/Users/__hlk_nm/Downloads/timeline_image'
