@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from authentication.models import User
 
 
 class Timeline(models.Model):
@@ -15,7 +15,7 @@ class Timeline(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Timeline, on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=255, default="")
     text = models.TextField()
 
 

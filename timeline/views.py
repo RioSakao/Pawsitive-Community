@@ -58,14 +58,27 @@ class TimelineViews(APIView):
         p_username = data.get('username', '')
         p_categories = data.get('categories', {})
         p_content = data.get('content', '')
-        p_image = Image.objects.create(data.get('images', ''))
+        image_data = data.get('images')
+        p_image = None
+        if image_data is not None:
+            p_image = Image.objects.create(**image_data)
         if p_categories is not None:
             missing = p_categories.get('missing', False)
             foster = p_categories.get('foster', False)
             adoption = p_categories.get('adoption', False)
             general = p_categories.get('general', False)
-            Timeline(username=p_username, missing=missing, foster=foster,
-                     adoption=adoption, general=general,
-                     content=p_content, images=p_image
-                     ).save()
+            timeline_instance = Timeline.objects.create(
+                username=p_username,
+                missing=missing,
+                foster=foster,
+                adoption=adoption,
+                general=general,
+                content=p_content)
+            if p_image is not None:
+                timeline_instance.images.set(p_image)
+            timeline_instance.save()
+            # Timeline(username=p_username, missing=missing, foster=foster,
+            #          adoption=adoption, general=general,
+            #          content=p_content, images=p_image
+            #          ).save()
         return Response(status=status.HTTP_201_CREATED)
