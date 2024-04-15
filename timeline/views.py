@@ -18,12 +18,13 @@ class CommentViews(APIView):
         # Deserialize the JSON string to a Python object
         data = json.loads(json_data)
         post_id = data.get('id')
+        username = data.get('username')
         print(post_id)
         try:
             post = Timeline.objects.get(pk=post_id)
             text = data.get('text')
             print(text)
-            Comment(post=post, text=text).save()
+            Comment(post=post, text=text, username=username).save()
         except:
             print("Catched an error")
 
@@ -58,10 +59,10 @@ class TimelineViews(APIView):
         p_username = data.get('username', '')
         p_categories = data.get('categories', {})
         p_content = data.get('content', '')
-        image_data = data.get('images')
+        # image_data = data.get('image')
         p_image = None
-        if image_data is not None:
-            p_image = Image.objects.create(**image_data)
+        # if image_data is not None:
+        #     p_image = Image.objects.create(**image_data)
         if p_categories is not None:
             missing = p_categories.get('missing', False)
             foster = p_categories.get('foster', False)
